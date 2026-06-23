@@ -1,0 +1,16 @@
+
+services:
+  jenkins:
+    build: .                       # usa el Dockerfile de esta misma carpeta
+    container_name: jenkins
+    user: root                     # necesario para que Jenkins pueda usar el Docker de tu PC
+    ports:
+      - "8081:8080"                # interfaz web -> http://localhost:8081
+      - "50000:50000"              # comunicación con agentes (opcional)
+    volumes:
+      - jenkins_home:/var/jenkins_home          # guarda la configuración de Jenkins
+      - /var/run/docker.sock:/var/run/docker.sock  # permite a Jenkins usar el Docker de tu PC
+    restart: unless-stopped
+
+volumes:
+  jenkins_home:
